@@ -1,33 +1,20 @@
 ---
 import background from '../assets/background.svg';
 import Layout from '../layouts/Layout.astro';
+import SpendingDashboard from './SpendingDashboard.svelte';
 ---
-<!-- import chart js  -->
-<script src="../scripts/main.js"></script>
 
 <Layout>
-	<div id="container">
-		<img id="background" src={background.src} alt="" fetchpriority="high" />
-		<main>
-			<h1 class="spending-title" data-council="England"></h1>
-			<div class="chart-container">
-				<section class="chart-controls">
-					<label for="year-select">Select Year:</label>
-					<select id="year-select"></select>
-				</section>
-				<p class="spending-total"><strong></strong></p>
-				<section class="chart-view">
-					<canvas class="spending-chart" data-council="England"></canvas>
-				</section>
-				<section class="search-section">
-					<label for="council-search">Select Council:</label>
-					<input type="text" id="council-search" list="council-list" placeholder="Start typing...">
-					<datalist id="council-list"></datalist>
-				</section>
-			</div>
-		</main>
-	</div>
+  <div id="container">
+    <img id="background" src={background.src} alt="" fetchpriority="high" />
+    <main>
+      <div class="chart-container">
+        <SpendingDashboard client:load />
+      </div>
+    </main>
+  </div>
 </Layout>
+
 
 <style>
 	#background {
