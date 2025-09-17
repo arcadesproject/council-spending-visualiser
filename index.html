@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spending Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        canvas {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Local Authority Spending Data</h1>
+    <canvas id="spendingChart"></canvas>
+
+    <script>
+        // Load the JSON data
+        fetch('slim_spending.json')
+            .then(response => response.json())
+            .then(data => {
+                // Prepare data for the chart
+                const years = data.map(item => item.year_ending);
+                const spendingCategories = [
+                    "Education", "Highways_Transport", "Children_Social_Care",
+                    "Adult_Social_Care", "Public_Health", "Housing",
+                    "Culture", "Environment", "Planning", "Police",
+                    "Fire_Rescue", "Central_Services", "Other", "Total"
+                ];
+
+                // Collect spending data for each category
+                const spendingData = spendingCategories.reduce((acc, category) => {
+                    acc[category] = data.map(item => item[category]);
+                    return acc;
+                }, {});
+
+                // Create chart
+                const ctx = document.getElementById('spendingChart').getContext('2d');
+                const spendingChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: spendingCategories.map(category => ({
+                            label: category,
+                            data: spendingData[category],
+                            borderColor: getRandomColor(),
+                            fill: false,
+                            tension: 0.1
+                        }))
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Year'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Spending (in millions)'
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading the data:', error));
+
+        // Helper function to generate random color
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+
+</body>
+</html>
