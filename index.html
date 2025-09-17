@@ -24,7 +24,7 @@
 
     <script>
         // Load the JSON data
-        fetch('slim_spending.json')
+        fetch('https://raw.githubusercontent.com/arcadesproject/council-spending-visualiser/main/data/council_spending.json')
             .then(response => response.json())
             .then(data => {
                 // Prepare data for the chart
