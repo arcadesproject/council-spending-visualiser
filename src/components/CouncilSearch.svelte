@@ -34,8 +34,23 @@
         inputValue = fallback;
         dispatch('change', fallback);
       }
-    }, 3000); // 300ms debounce delay
+    }, 3000);
   }
+
+  function handleSubmission(event) {
+    const rawInput = event.target.value;
+    const matched = councilList.find(name => normalize(name) === normalize(rawInput));
+    const fallback = getFuzzyMatches(rawInput, councilList)[0];
+
+    if (matched) {
+      inputValue = matched;
+      dispatch('change', matched);
+    } else if (fallback) {
+      inputValue = fallback;
+      dispatch('change', fallback);
+    }
+  }
+
 </script>
 
 <div>
@@ -47,6 +62,7 @@
     placeholder="Search..."
     bind:value={inputValue}
     on:input={handleInput}
+    on:change={handleSubmission}
   />
   <datalist id="council-list">
     {#each councilList as name}

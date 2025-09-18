@@ -10,7 +10,7 @@
   let chartInstance;
 
   async function loadChart() {
-    await tick(); // ✅ Wait for canvas to be bound
+    await tick();
 
     if (!canvas) return;
 

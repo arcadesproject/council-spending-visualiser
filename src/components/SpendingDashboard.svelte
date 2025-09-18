@@ -13,9 +13,24 @@
   let entries = [];
   let total = 0;
 
+  // fetch with caching and localstorage and expiry after a day
   async function fetchCouncilData() {
+    const key = 'council-spending-cache';
+    const expiryKey = 'council-spending-cache-expiry';
+
+    const now = Date.now();
+    const cached = localStorage.getItem(key)
+    const expiry = localStorage.getItem(expiryKey);
+
+    if (cached && expiry && now < Number(expiry)) {
+      return JSON.parse(cached);
+    }
+
     const res = await fetch('https://raw.githubusercontent.com/arcadesproject/council-spending-visualiser/refs/heads/main/data/council_spending.json');
-    return await res.json();
+    const json = await res.json();
+    localStorage.setItem(key, JSON.stringify(json));
+    localStorage.setItem(expiryKey, String(now + 86400000));
+    return json;
   }
 
   const normalize = str => str.trim().toLowerCase();
@@ -35,9 +50,13 @@
   }
 
   onMount(async () => {
-    data = await fetchCouncilData();
-    allCouncilNames = [...new Set(data.map(entry => entry.LA_name))].sort();
-    updateEntries();
+    try {
+      data = await fetchCouncilData();
+      allCouncilNames = [...new Set(data.map(entry => entry.LA_name))].sort();
+      updateEntries();
+    } catch (err) {
+      console.error('Failed to load council data:', err);
+    }
   });
 
   function handleCouncilChange(newCouncil) {

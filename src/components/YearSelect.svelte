@@ -5,7 +5,7 @@
 
   const dispatch = createEventDispatcher();
 
-  // Ensure selectedYear is valid
+  // year validation
   $: if (!availableYears.includes(selectedYear)) {
     selectedYear = availableYears[0] ?? '';
   }
