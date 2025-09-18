@@ -75,22 +75,20 @@
 </script>
 
 <main class="dashboard">
-  <header>
   <DarkmodeToggle />
-  </header>
   <SpendingHeader {councilName} {year} {total} />
   <section class="chart-controls">
     <YearSelect {availableYears} bind:selectedYear={year} on:change={(e) => handleYearChange(e.detail)} />
   </section>
-  <div class="chart-wrapper">
-    <ChartWidget {councilName} {year} />
+  <div class="chart-scroll-container">
+    <div class="chart-wrapper">
+      <ChartWidget {councilName} {year} />
+    </div>
   </div>
   <section class="search-section">
     <CouncilSearch councilList={allCouncilNames} selectedCouncil={councilName} on:change={(e) => handleCouncilChange(e.detail)} />
   </section>
-  <footer>
     <AboutPanel />
-  </footer>
 </main>
 
 
@@ -100,28 +98,61 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
     padding: 1rem;
-    max-width: 800px;
+    max-width: 100%;
     margin: 0 auto;
   }
 
   .chart-wrapper {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
+    height: auto;
     aspect-ratio: 1 / 1;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  @media (max-width: 600px) {
+  .chart-controls,
+  .search-section {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+
+  @media (max-width: 640px) {
     .dashboard {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
       padding: 0.5rem;
+      gap: 1rem;
     }
+    .chart-scroll-container {
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: 0.5rem; 
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
     .chart-wrapper {
-      max-width: 100%;
+      height: auto;
+      aspect-ratio: auto;
+    }
+
+    .chart-controls,
+    .search-section {
+      flex-direction: column;
+      align-items: stretch;
     }
   }
+
 
 </style>

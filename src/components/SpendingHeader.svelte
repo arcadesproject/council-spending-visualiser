@@ -13,11 +13,12 @@
 
 <style>
   .spending-title {
-    min-height: 2.5em;
+    min-height: 1.5em;
     text-align: center;
     font-size: 1.5rem;
     word-break: break-word;
     font-size: 1.2rem;
+    margin: 0 auto;
   }
 
   @media (max-width: 600px) {
