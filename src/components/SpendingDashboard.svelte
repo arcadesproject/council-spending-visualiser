@@ -4,6 +4,8 @@
   import CouncilSearch from './CouncilSearch.svelte';
   import YearSelect from './YearSelect.svelte';
   import SpendingHeader from './SpendingHeader.svelte';
+  import AboutPanel from './AboutPanel.svelte';
+  import DarkmodeToggle from './DarkmodeToggle.svelte';
 
   let data = [];
   let allCouncilNames = [];
@@ -21,12 +23,14 @@
     const now = Date.now();
     const cached = localStorage.getItem(key)
     const expiry = localStorage.getItem(expiryKey);
+    const dataUrl = import.meta.env.PUBLIC_SPENDING_URL;
+    console.log('Fetching from:', dataUrl);
 
     if (cached && expiry && now < Number(expiry)) {
       return JSON.parse(cached);
     }
 
-    const res = await fetch('https://raw.githubusercontent.com/arcadesproject/council-spending-visualiser/refs/heads/main/data/council_spending.json');
+    const res = await fetch(dataUrl);
     const json = await res.json();
     localStorage.setItem(key, JSON.stringify(json));
     localStorage.setItem(expiryKey, String(now + 86400000));
@@ -71,6 +75,9 @@
 </script>
 
 <main class="dashboard">
+  <header>
+  <DarkmodeToggle />
+  </header>
   <SpendingHeader {councilName} {year} {total} />
   <section class="chart-controls">
     <YearSelect {availableYears} bind:selectedYear={year} on:change={(e) => handleYearChange(e.detail)} />
@@ -81,6 +88,9 @@
   <section class="search-section">
     <CouncilSearch councilList={allCouncilNames} selectedCouncil={councilName} on:change={(e) => handleCouncilChange(e.detail)} />
   </section>
+  <footer>
+    <AboutPanel />
+  </footer>
 </main>
 
 

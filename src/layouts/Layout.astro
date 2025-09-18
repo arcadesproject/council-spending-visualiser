@@ -6,6 +6,16 @@
 		<meta name="generator" content={Astro.generator} />
 		<title>Council Spending</title>
 	</head>
+	<script>
+		// stop incorrect dark/light mode loading
+		(function () {
+			const stored = localStorage.getItem('theme');
+			const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			const theme = stored || (systemDark ? 'dark' : 'light');
+			document.documentElement.setAttribute('data-theme', theme);
+		})();
+	</script>
+
 	<body>
 		<slot />
 	</body>
@@ -17,5 +27,47 @@
 		margin: 0;
 		width: 100%;
 		height: 100%;
+		background: var(--bg);
+		color: var(--text);
+		user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
 	}
+
+	/* allow text selection just for input search box */
+	input {
+	user-select: text;
+	}
+
+	/* light and dark mode styling */
+	:root {
+		--bg: #cccccc;
+		--text: #0b0b0c;
+		--muted: #6b7280;
+		--card: #ddd7d7a8;
+		--border: #e5e7eb;
+		--accent: #3b82f6;
+
+		--chart-bg: #ffffff;
+		--chart-grid: #e5e7eb;
+		--chart-legend-text: #111827;
+		--chart-tooltip-bg: rgba(17, 24, 39, 0.9);
+		--chart-tooltip-text: #f9fafb;
+	}
+
+	:root[data-theme="dark"] {
+		--bg: #0f0f2b;
+		--text: #e5e7eb;
+		--muted: #9ca3af;
+		--card: #113050b0;
+		--border: #1f2937;
+		--accent: #60a5fa;
+
+		--chart-bg: #0b0b0c;
+		--chart-grid: #374151;
+		--chart-legend-text: #e5e7eb;
+		--chart-tooltip-bg: rgba(229, 231, 235, 0.95);
+		--chart-tooltip-text: #0b0b0c;
+	}
+
 </style>
