@@ -24,4 +24,9 @@
         background: var(--card); 
         color: var(--text)
     }
+
+    #dark-mode-toggle:hover {
+      transform: scale(1.05);
+    }
+
 </style>

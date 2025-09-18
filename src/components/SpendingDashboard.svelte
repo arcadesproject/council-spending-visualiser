@@ -81,9 +81,7 @@
     <YearSelect {availableYears} bind:selectedYear={year} on:change={(e) => handleYearChange(e.detail)} />
   </section>
   <div class="chart-scroll-container">
-    <div class="chart-wrapper">
       <ChartWidget {councilName} {year} />
-    </div>
   </div>
   <section class="search-section">
     <CouncilSearch councilList={allCouncilNames} selectedCouncil={councilName} on:change={(e) => handleCouncilChange(e.detail)} />
@@ -98,20 +96,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     padding: 1rem;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0
   }
-
-  .chart-wrapper {
+    
+  .chart-scroll-container {
     width: 100%;
+    margin: 0.5rem auto;
+    overflow-y: auto;
     max-width: 600px;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    aspect-ratio: auto;
+    padding: 1rem;
   }
 
   .chart-controls,
@@ -120,7 +117,6 @@
     max-width: 600px;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
     justify-content: center;
   }
 
@@ -142,17 +138,11 @@
       padding-bottom: 0.5rem;
     }
 
-    .chart-wrapper {
-      height: auto;
-      aspect-ratio: auto;
-    }
-
     .chart-controls,
     .search-section {
       flex-direction: column;
       align-items: stretch;
     }
   }
-
 
 </style>

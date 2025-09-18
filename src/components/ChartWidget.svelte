@@ -86,7 +86,6 @@
       }
     });
 
-    // Update the legendItems array instead of manipulating DOM directly
     legendItems = labels
       .map((label, i) => ({
         label,
@@ -108,7 +107,6 @@
     loadChart();
   });
 
-  // reload only if councilName or year changes
   $: if (canvas && councilName && year) {
     loadChart();
   }
@@ -119,12 +117,11 @@
     <canvas bind:this={canvas}></canvas>
   </div>
   
-  <!-- Use Svelte's reactive rendering for the legend -->
   <div class="legend-container">
     {#each legendItems as item}
       <div class="legend-item">
         <span class="legend-color-box" style="background: {item.color}"></span>
-        {item.label} – £{(item.value / 1_000_000).toFixed(2)}bn
+        {item.label} (£{(item.value / 1_000_000).toFixed(2)}bn)
       </div>
     {/each}
   </div>
@@ -144,11 +141,12 @@
   .chart-wrap {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    max-width: 900px;
+    width: 90%;
+    max-width: 500px;
     margin: 0 auto;
     position: relative;
     min-height: 300px;
+    max-height: 500px;
   }
 
   .chart-area {
@@ -175,8 +173,9 @@
   .legend-item {
     display: flex;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
     font-size: 0.9rem;
+    font-weight: 600;
     color: var(--chart-legend-text);
     line-height: 1.4;
   }
@@ -184,7 +183,7 @@
   .legend-color-box {
     width: 16px;
     height: 16px;
-    margin-right: 0.75rem;
+    margin-right: 0.5rem;
     border-radius: 4px;
     flex-shrink: 0;
     display: inline-block;

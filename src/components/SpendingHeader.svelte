@@ -5,20 +5,34 @@
 </script>
 
 <h1 class="spending-title" data-council={councilName}>
-  {councilName} Spending in {year}
+  Financial Overview: {councilName} Council Expenditure for {year}
 </h1>
-<p class="spending-total">
-  <strong>£{(total / 1_000_000).toFixed(2)}bn</strong>
+<hr class="title-divider" />
+<p class="spending-subtitle">
+  <strong>Total expenditure: £{(total / 1_000_000).toFixed(2)}bn</strong>
 </p>
+<hr class="title-divider" />
 
 <style>
   .spending-title {
-    min-height: 1.5em;
+    font-size: 1.75rem;
+    font-weight: 600;
     text-align: center;
-    font-size: 1.5rem;
-    word-break: break-word;
-    font-size: 1.2rem;
-    margin: 0 auto;
+    color: #2c3e50;
+  }
+
+  .spending-subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #7f8c8d;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+
+  .title-divider {
+    width: 60%;
+    border: none;
+    border-top: 2px solid #ecf0f1;
   }
 
   @media (max-width: 600px) {

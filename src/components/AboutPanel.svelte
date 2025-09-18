@@ -19,7 +19,7 @@
   {#if isOpen}
     <div class="about-panel" transition:slide={{ duration: 300 }}>
       <h2>About</h2>
-      <p>Visualisation for English council spending. Data is based upon <a href="https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-revenue-outturn-multi-year-data-set" target="_blank">a multi-year RO CSV provided by the government.</a></p>
+      <p>Visualisation for English council spending. Data is based upon <a href="https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-revenue-outturn-multi-year-data-set" target="_blank">a multi-year RO CSV provided by the government.</a> Some years have no data provided, others may be inaccurate.</p>
       <p>Data <a href="https://python.org">cleaned by Python.</a></p>
       <p>Built with Astro, Svelte components and Chart JS. Deployed via GitHub Pages.</p>
       <p><a href="https://github.com/arcadesproject/council-spending-visualiser" target="_blank">Source code</a></p>
@@ -36,7 +36,7 @@
 }
 
 .about-button {
-  background: linear-gradient(135deg, #071591, #5c2177);
+  background: var(--about-pill);
   color: white;
   border: none;
   border-radius: 999px;
@@ -59,7 +59,6 @@
   width: 300px;
   max-height: 70vh;
   overflow-y: auto;
-  /* background: rgba(239, 234, 234, 0.95); */
   backdrop-filter: blur(6px);
   border-radius: 12px;
   padding: 2rem;

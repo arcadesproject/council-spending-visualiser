@@ -7,7 +7,7 @@
 		<title>Council Spending</title>
 	</head>
 	<script>
-		// stop incorrect dark/light mode loading
+		// dark/light mode loading correctly
 		(function () {
 			const stored = localStorage.getItem('theme');
 			const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -33,6 +33,7 @@
 		user-select: none;
 		-webkit-user-select: none;
 		-ms-user-select: none;
+		overflow-y : auto;
 	}
 
 	/* allow text selection just for input search box */
@@ -48,7 +49,8 @@
 		--card: #ddd7d7a8;
 		--border: #e5e7eb;
 		--accent: #3b82f6;
-
+		
+		--about-pill: linear-gradient(135deg, #ac9883, #c2bda3);
 		--chart-bg: #ffffff;
 		--chart-grid: #e5e7eb;
 		--chart-legend-text: #111827;
@@ -64,11 +66,13 @@
 		--border: #1f2937;
 		--accent: #60a5fa;
 
+		--about-pill: linear-gradient(135deg, #071591, #5c2177);
 		--chart-bg: #0b0b0c;
 		--chart-grid: #374151;
 		--chart-legend-text: #e5e7eb;
 		--chart-tooltip-bg: rgba(229, 231, 235, 0.95);
 		--chart-tooltip-text: #0b0b0c;
+		
 	}
 
 </style>
