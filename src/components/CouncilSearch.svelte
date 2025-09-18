@@ -6,6 +6,7 @@
   let inputValue = selectedCouncil;
 
   const dispatch = createEventDispatcher();
+  let debounceTimeout;
 
   function normalize(str) {
     return str.trim().toLowerCase();
@@ -18,20 +19,22 @@
       .slice(0, maxSuggestions);
   }
 
-  function handleChange(event) {
+  function handleInput(event) {
     const rawInput = event.target.value;
-    const matched = councilList.find(name => normalize(name) === normalize(rawInput));
 
-    if (matched) {
-      inputValue = matched;
-      dispatch('change', matched);
-    } else {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+      const matched = councilList.find(name => normalize(name) === normalize(rawInput));
       const fallback = getFuzzyMatches(rawInput, councilList)[0];
-      if (fallback) {
+
+      if (matched) {
+        inputValue = matched;
+        dispatch('change', matched);
+      } else if (fallback) {
         inputValue = fallback;
         dispatch('change', fallback);
       }
-    }
+    }, 3000); // 300ms debounce delay
   }
 </script>
 
@@ -43,7 +46,7 @@
     list="council-list"
     placeholder="Search..."
     bind:value={inputValue}
-    on:change={handleChange}
+    on:input={handleInput}
   />
   <datalist id="council-list">
     {#each councilList as name}

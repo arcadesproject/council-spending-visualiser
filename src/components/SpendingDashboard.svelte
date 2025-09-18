@@ -45,20 +45,54 @@
     updateEntries();
   }
 
-
   function handleYearChange(newYear) {
     year = newYear;
     updateEntries();
   }
 </script>
 
-<main>
+<main class="dashboard">
   <SpendingHeader {councilName} {year} {total} />
   <section class="chart-controls">
     <YearSelect {availableYears} bind:selectedYear={year} on:change={(e) => handleYearChange(e.detail)} />
   </section>
-  <ChartWidget {councilName} {year} />
+  <div class="chart-wrapper">
+    <ChartWidget {councilName} {year} />
+  </div>
   <section class="search-section">
-  <CouncilSearch councilList={allCouncilNames} selectedCouncil={councilName} on:change={(e) => handleCouncilChange(e.detail)} />
+    <CouncilSearch councilList={allCouncilNames} selectedCouncil={councilName} on:change={(e) => handleCouncilChange(e.detail)} />
   </section>
 </main>
+
+
+<style>
+
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .dashboard {
+      padding: 0.5rem;
+    }
+    .chart-wrapper {
+      max-width: 100%;
+    }
+  }
+
+</style>
