@@ -4,7 +4,7 @@
 </script>
 
 <button
-  on:click={toggleTheme}
+  onclick={toggleTheme}
   id="dark-mode-toggle"
   aria-label="Toggle dark mode"
 >

@@ -1,6 +1,6 @@
 <script>
   import { fade, slide } from 'svelte/transition';
-  let isOpen = false;
+  let isOpen = $state(false);
 
   function togglePanel() {
     isOpen = !isOpen;
@@ -8,7 +8,7 @@
 </script>
 
 <div class="about-container">
-  <button class="about-button" on:click={togglePanel}>
+  <button class="about-button" onclick={togglePanel}>
     {#if !isOpen}
       About
     {:else}

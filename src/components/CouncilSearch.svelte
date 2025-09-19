@@ -1,15 +1,15 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  let { 
+    councilList = [], 
+    selectedCouncil = '', 
+    onChange = () => {} 
+  } = $props();
 
-  export let councilList = [];
-  export let selectedCouncil = '';
-  let inputValue = selectedCouncil;
-
-  const dispatch = createEventDispatcher();
+  let inputValue = $state(selectedCouncil);
   let debounceTimeout;
 
   function normalize(str) {
-    return str.trim().toLowerCase();
+    return str ? String(str).trim().toLowerCase() : '';
   }
 
   function getFuzzyMatches(input, list, maxSuggestions = 5) {
@@ -29,10 +29,10 @@
 
       if (matched) {
         inputValue = matched;
-        dispatch('change', matched);
+        onChange(matched);
       } else if (fallback) {
         inputValue = fallback;
-        dispatch('change', fallback);
+        onChange(fallback);
       }
     }, 3000);
   }
@@ -44,13 +44,12 @@
 
     if (matched) {
       inputValue = matched;
-      dispatch('change', matched);
+      onChange(matched);
     } else if (fallback) {
       inputValue = fallback;
-      dispatch('change', fallback);
+      onChange(fallback);
     }
   }
-
 </script>
 
 <div>
@@ -61,8 +60,8 @@
     list="council-list"
     placeholder="Search..."
     bind:value={inputValue}
-    on:input={handleInput}
-    on:change={handleSubmission}
+    oninput={handleInput}
+    onchange={handleSubmission}
   />
   <datalist id="council-list">
     {#each councilList as name}

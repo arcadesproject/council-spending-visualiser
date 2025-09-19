@@ -1,19 +1,21 @@
 <script>
   import { onMount, tick } from 'svelte';
-  import { theme } from '../lib/theme';
   import { Chart, ArcElement, Tooltip, Title, PieController } from 'chart.js';
 
   Chart.register(PieController, ArcElement, Tooltip, Title);
 
-  export let councilName = 'England';
-  export let year = null;
+  let { councilName = 'England', year = null } = $props();
+
+  let legendItems = $state([]);
+  let hasData = $state(true);
+
   let canvas;
   let chartInstance;
-  let hasData = true;
   const dataUrl = import.meta.env.PUBLIC_SPENDING_URL;
-  
-  // Add reactive variables for legend
-  let legendItems = [];
+
+  function normalize(str) {
+    return str ? String(str).trim().toLowerCase() : '';
+  }
 
   function formatLabels(str) {
     return str
@@ -27,29 +29,24 @@
     const response = await fetch(dataUrl);
     const data = await response.json();
 
-    const normalize = s => s.trim().toLowerCase();
-    const entries = data.filter(
-      e => normalize(e.LA_name) === normalize(councilName)
-    );
+    const entries = data.filter(e => normalize(e.LA_name) === normalize(councilName));
     const filtered = entries.find(e => String(e.year_ending).startsWith(year));
 
     if (!filtered) {
       hasData = false;
+      legendItems = [];
       destroyChart();
-      legendItems = []; // Clear legend
       return;
     }
 
     const categories = Object.entries(filtered).filter(
-      ([k, v]) =>
-        !['year_ending', 'LA_name', 'ONS_code', 'Total'].includes(k) &&
-        typeof v === 'number'
+      ([k, v]) => !['year_ending', 'LA_name', 'ONS_code', 'Total'].includes(k) && typeof v === 'number'
     );
 
-    if (categories.length === 0) {
+    if (!categories.length) {
       hasData = false;
+      legendItems = [];
       destroyChart();
-      legendItems = []; // Clear legend
       return;
     }
 
@@ -57,9 +54,7 @@
 
     const labels = categories.map(([k]) => formatLabels(k));
     const values = categories.map(([_, v]) => v);
-    const colors = labels.map(
-      (_, i) => `hsl(${(i * 360) / labels.length}, 70%, 60%)`
-    );
+    const colors = labels.map((_, i) => `hsl(${(i * 360) / labels.length}, 70%, 60%)`);
 
     destroyChart();
 
@@ -77,8 +72,7 @@
                 const ds = ctx.chart.data.datasets[0];
                 const total = ds.data.reduce((s, v) => s + v, 0);
                 const value = ctx.raw;
-                const pct = ((value / total) * 100).toFixed(1);
-                return ` ${pct}%`;
+                return ` ${(value / total * 100).toFixed(1)}%`;
               }
             }
           }
@@ -86,13 +80,11 @@
       }
     });
 
-    legendItems = labels
-      .map((label, i) => ({
-        label,
-        value: values[i],
-        color: colors[i]
-      }))
-      .sort((a, b) => b.value - a.value);
+    legendItems = labels.map((label, i) => ({
+      label,
+      value: values[i],
+      color: colors[i]
+    })).sort((a, b) => b.value - a.value);
   }
 
   function destroyChart() {
@@ -107,10 +99,12 @@
     loadChart();
   });
 
-  $: if (canvas && councilName && year) {
+  $effect(() => {
+    if (!canvas || !councilName || !year) return;
     loadChart();
-  }
+  });
 </script>
+
 
 <div class="chart-wrap">
   <div class="chart-area">

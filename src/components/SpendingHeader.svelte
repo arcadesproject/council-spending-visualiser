@@ -1,7 +1,5 @@
 <script>
-  export let councilName = '';
-  export let year = '';
-  export let total = 0;
+  let { councilName = '', year = '', total = 0 } = $props();
 </script>
 
 <h1 class="spending-title" data-council={councilName}>
