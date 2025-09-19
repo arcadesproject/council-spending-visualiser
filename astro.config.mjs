@@ -1,10 +1,9 @@
-// @ts-check
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
 import svelte from '@astrojs/svelte';
 
-// https://astro.build/config
 export default defineConfig({
-    // / for localStorage, full path for git pages
-    base: import.meta.env.DEV ? '/' : '/council-spending-visualiser/',
-    integrations: [svelte()],
+  site: 'https://arcadesproject.github.io',
+  base: '/council-spending-visualiser',
+  integrations: [svelte()],
 });
