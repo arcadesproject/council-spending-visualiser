@@ -21,7 +21,12 @@
 </script>
 
 <label for="year-select">Select Year:</label>
-<select id="year-select" bind:value={selectedYearState} onchange={handleChange}>
+<select 
+  id="year-select" 
+  bind:value={selectedYearState} 
+  onchange={handleChange}
+  aria-describedby="year-select-help"
+>
   {#each availableYears as year}
     <option value={year}>{year}</option>
   {/each}

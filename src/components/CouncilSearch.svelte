@@ -62,6 +62,8 @@
     bind:value={inputValue}
     oninput={handleInput}
     onchange={handleSubmission}
+    aria-label="Council search"
+    aria-describedby="council-search-help"
   />
   <datalist id="council-list">
     {#each councilList as name}
