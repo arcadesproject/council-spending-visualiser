@@ -20,7 +20,7 @@
     <div class="about-panel" transition:slide={{ duration: 300 }}>
       <h2>About</h2>
       <p>Visualisation for English council spending. Data is based upon <a href="https://www.gov.uk/government/statistics/local-authority-revenue-expenditure-and-financing-england-revenue-outturn-multi-year-data-set" target="_blank">a multi-year RO CSV provided by the government.</a> Some years have no data provided, others may be inaccurate.</p>
-      <p>Data <a href="https://python.org">cleaned by Python.</a></p>
+      <p>Data <a href="https://github.com/arcadesproject/python-council-data-cleanup">cleaned by Python.</a></p>
       <p>Built with Astro, Svelte components and Chart JS. Deployed via GitHub Pages.</p>
       <p><a href="https://github.com/arcadesproject/council-spending-visualiser" target="_blank">Source code</a></p>
     </div>

@@ -29,6 +29,7 @@ git clone https://github.com/arcadesprojectcode/council-spending-dashboard.git
 cd council-spending-dashboard
 npm install
 ````
+Add data location to .env file, using json located in public/data
 
 Run locally:
 
