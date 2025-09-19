@@ -23,7 +23,7 @@
     const now = Date.now();
     const cached = localStorage.getItem(key);
     const expiry = localStorage.getItem(expiryKey);
-    const dataUrl = import.meta.env.PUBLIC_SPENDING_URL;
+    const dataUrl = import.meta.env.PUBLIC_SPENDING_URL || '/council-spending-visualiser/data/council_spending.json';;
 
     if (cached && expiry && now < Number(expiry)) {
       return JSON.parse(cached);

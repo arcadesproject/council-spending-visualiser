@@ -11,7 +11,7 @@
 
   let canvas;
   let chartInstance;
-  const dataUrl = import.meta.env.PUBLIC_SPENDING_URL;
+  const dataUrl = import.meta.env.PUBLIC_SPENDING_URL || '/council-spending-visualiser/data/council_spending.json';;
 
   function normalize(str) {
     return str ? String(str).trim().toLowerCase() : '';
